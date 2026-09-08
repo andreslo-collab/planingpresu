@@ -1,0 +1,1648 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planning, Presupuesto y Certificaciones · C/ General Tovar 2</title>
+    <style>
+        :root {
+            --bg-paper: #D8D1C7;
+            --bg-card: #FFFFFF;
+            --bg-card-alt: #F4EFEB;
+            --ink-primary: #2C2B29;
+            --ink-secondary: #5A5854;
+            --ink-muted: #7E7B74;
+            --enue-green: #6A6D63;
+            --enue-green-dark: #4F524A;
+            --enue-terracotta: #9B6A54;
+            --enue-terracotta-light: #B8856F;
+            --border-line: #C7BFB3;
+            --border-light: #E5DFC5;
+            --gold-accent: #C49A45;
+            --highlight: #2C2B29;
+            --shadow-sm: 0 2px 6px rgba(44, 43, 41, 0.06);
+            --shadow-md: 0 6px 16px rgba(44, 43, 41, 0.09);
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-paper);
+            color: var(--ink-primary);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 60px;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #2C2B29 0%, #1a1918 100%);
+            color: #FFFFFF;
+            padding: 32px 0 28px 0;
+            border-bottom: 3px solid var(--enue-terracotta);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            margin-bottom: 24px;
+        }
+
+        .hero-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .hero-brand {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .hero-logo {
+            height: 56px;
+            width: auto;
+            object-fit: contain;
+            background: #FFFFFF;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(196, 154, 69, 0.2);
+            color: #E6C775;
+            border: 1px solid rgba(196, 154, 69, 0.4);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+        }
+
+        .hero-title {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            color: #FFFFFF;
+            margin-bottom: 4px;
+        }
+
+        .hero-subtitle {
+            font-size: 13px;
+            color: #C7BFB3;
+            font-weight: 400;
+        }
+
+        .total-box {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 16px 20px;
+            border-radius: var(--radius-md);
+            text-align: right;
+            min-width: 260px;
+            backdrop-filter: blur(4px);
+        }
+
+        .total-box-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #A39D94;
+            font-weight: 600;
+        }
+
+        .total-box-amount {
+            font-size: 28px;
+            font-weight: 800;
+            color: #FFFFFF;
+            line-height: 1.15;
+            margin: 4px 0;
+            font-family: var(--font-mono);
+        }
+
+        .total-box-sub {
+            font-size: 12px;
+            color: #E6C775;
+            margin-bottom: 2px;
+        }
+
+        .total-box-delivery {
+            font-size: 11.5px;
+            color: #D8D1C7;
+            font-weight: 500;
+        }
+
+        .tabs-nav {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid var(--border-line);
+        }
+
+        .tab-btn {
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--border-line);
+            border-bottom: none;
+            padding: 11px 18px;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--ink-secondary);
+            cursor: pointer;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab-btn:hover {
+            background: #FFFFFF;
+            color: var(--ink-primary);
+        }
+
+        .tab-btn.active {
+            background: #FFFFFF;
+            color: var(--enue-terracotta);
+            border-color: var(--border-line);
+            border-top: 3px solid var(--enue-terracotta);
+            box-shadow: 0 -2px 6px rgba(0,0,0,0.03);
+            position: relative;
+            margin-bottom: -2px;
+            padding-bottom: 13px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.25s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-line);
+            border-radius: var(--radius-md);
+            padding: 16px 18px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .metric-label {
+            font-size: 11.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--ink-muted);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            font-family: var(--font-mono);
+            line-height: 1.2;
+        }
+
+        .metric-sub {
+            font-size: 11.5px;
+            color: var(--enue-terracotta);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .notice-box {
+            background: #EDE8E1;
+            border-left: 4px solid var(--enue-green);
+            padding: 14px 18px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: var(--ink-secondary);
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            border: 1px solid var(--border-line);
+            border-left: 4px solid var(--enue-green);
+        }
+
+        .notice-box strong {
+            color: var(--ink-primary);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 14px;
+        }
+
+        .section-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-desc {
+            font-size: 13px;
+            color: var(--ink-secondary);
+            margin-top: -6px;
+            margin-bottom: 16px;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-search, .select-filter {
+            background: #FFFFFF;
+            border: 1px solid var(--border-line);
+            border-radius: 6px;
+            padding: 7px 12px;
+            font-size: 13px;
+            color: var(--ink-primary);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-search:focus, .select-filter:focus {
+            border-color: var(--enue-terracotta);
+        }
+
+        .input-search {
+            min-width: 240px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-line);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        thead {
+            background: #EFEBE4;
+            border-bottom: 2px solid var(--border-line);
+        }
+
+        th {
+            padding: 12px 14px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            font-size: 11.5px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 12px 14px;
+            border-bottom: 1px solid #ECE7E0;
+            color: var(--ink-secondary);
+            vertical-align: middle;
+        }
+
+        tbody tr:hover {
+            background-color: #FAF8F5;
+        }
+
+        tbody tr.interactive-row {
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+
+        tbody tr.interactive-row:hover {
+            background-color: #F1EBE3;
+        }
+
+        tbody tr.selected-row {
+            background-color: #EBE3D7 !important;
+            font-weight: 600;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .font-mono {
+            font-family: var(--font-mono);
+        }
+
+        .fw-bold {
+            font-weight: 700;
+            color: var(--ink-primary);
+        }
+
+        .desc-sub {
+            font-size: 11.5px;
+            color: var(--ink-muted);
+            margin-top: 2px;
+            font-weight: 400;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 7px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .badge-code {
+            background: #E8E2D8;
+            color: var(--ink-primary);
+            font-family: var(--font-mono);
+        }
+
+        .badge-done {
+            background: #E2EADF;
+            color: #385E38;
+            border: 1px solid #C4D9BE;
+        }
+
+        .badge-pending {
+            background: #FDF3E7;
+            color: #9C5824;
+            border: 1px solid #F1D4B5;
+        }
+
+        .badge-final {
+            background: #F8E7E7;
+            color: #9B2C2C;
+            border: 1px solid #ECC4C4;
+        }
+
+        tfoot {
+            background: #E8E2D8;
+            border-top: 2px solid var(--border-line);
+            font-weight: 700;
+            color: var(--ink-primary);
+        }
+
+        tfoot td {
+            padding: 14px;
+            color: var(--ink-primary);
+        }
+
+        .gantt-wrapper {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .gantt-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .gantt-scroll {
+            overflow-x: auto;
+            border: 1px solid var(--border-line);
+            border-radius: var(--radius-md);
+            background: #FFFFFF;
+        }
+
+        .gantt-table {
+            width: 100%;
+            min-width: 980px;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .gantt-th-month {
+            background: #2C2B29;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 8px 4px;
+            font-size: 11px;
+            font-weight: 600;
+            border-right: 1px solid #444;
+        }
+
+        .gantt-th-week {
+            background: #E8E2D8;
+            color: var(--ink-primary);
+            text-align: center;
+            padding: 6px 2px;
+            font-size: 10px;
+            font-weight: 600;
+            border-right: 1px solid var(--border-line);
+            border-bottom: 2px solid var(--border-line);
+            width: 50px;
+        }
+
+        .gantt-task-name {
+            width: 280px;
+            padding: 9px 12px;
+            border-right: 2px solid var(--border-line);
+            border-bottom: 1px solid #ECE7E0;
+            font-weight: 500;
+            color: var(--ink-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+
+        .gantt-row {
+            cursor: pointer;
+            transition: background-color 0.15s;
+        }
+
+        .gantt-row:hover {
+            background-color: #FAF5EE;
+        }
+
+        .gantt-grid-cell {
+            border-right: 1px dashed #E5DFC5;
+            border-bottom: 1px solid #ECE7E0;
+            padding: 3px 0;
+            position: relative;
+        }
+
+        .gantt-bar-container {
+            position: relative;
+            height: 24px;
+            width: 100%;
+        }
+
+        .gantt-bar {
+            position: absolute;
+            height: 20px;
+            top: 2px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            color: #FFFFFF;
+            font-size: 10px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            z-index: 2;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .gantt-bar:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+            z-index: 5;
+        }
+
+        .detail-aside {
+            width: 320px;
+            background: #FFFFFF;
+            border: 1px solid var(--border-line);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 20px;
+        }
+
+        .detail-header {
+            border-bottom: 1px solid var(--border-line);
+            padding-bottom: 12px;
+            margin-bottom: 14px;
+        }
+
+        .detail-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            margin-top: 4px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 12.5px;
+        }
+
+        .detail-label {
+            color: var(--ink-muted);
+            font-weight: 500;
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--ink-primary);
+            text-align: right;
+        }
+
+        .detail-desc {
+            background: var(--bg-card-alt);
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--ink-secondary);
+            margin-top: 14px;
+            border-left: 3px solid var(--enue-terracotta);
+        }
+
+        .two-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .risk-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-line);
+            border-left: 5px solid var(--enue-terracotta);
+            border-radius: var(--radius-md);
+            padding: 16px 18px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .risk-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink-primary);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .risk-desc {
+            font-size: 12.5px;
+            color: var(--ink-secondary);
+            line-height: 1.45;
+        }
+
+        .supply-card {
+            background: #FFFFFF;
+            border: 1px solid var(--border-line);
+            border-left: 5px solid var(--enue-green);
+            border-radius: var(--radius-md);
+            padding: 16px 18px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .supply-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .supply-item {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink-primary);
+        }
+
+        .supply-lead {
+            font-size: 11px;
+            font-weight: 700;
+            background: #EAE6DF;
+            color: var(--ink-primary);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+        }
+
+        .supply-note {
+            font-size: 12.5px;
+            color: var(--ink-secondary);
+            line-height: 1.45;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .tech-item {
+            background: #FAF8F5;
+            border: 1px solid #ECE7E0;
+            padding: 14px 16px;
+            border-radius: 6px;
+        }
+
+        .tech-item.full-width {
+            grid-column: span 2;
+        }
+
+        .tech-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: var(--ink-muted);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .tech-val {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--ink-primary);
+        }
+
+        .clause-item {
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: var(--ink-secondary);
+            line-height: 1.5;
+            padding-left: 14px;
+            text-indent: -14px;
+        }
+
+        @media (max-width: 992px) {
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .gantt-wrapper {
+                flex-direction: column;
+            }
+            .detail-aside {
+                width: 100%;
+                position: static;
+            }
+            .two-cols {
+                grid-template-columns: 1fr;
+            }
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            .tech-item.full-width {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .total-box {
+                width: 100%;
+                text-align: left;
+            }
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+            .section-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .input-search {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="container hero-inner">
+            <div class="hero-brand">
+                <img src="https://cms.aikit.es/api/tools/threads/6a9fe45b9b1bff9fced2fed5/file/6a9fe45b9b1bff9fced2fed5_enue_logo.png" alt="ENUE Proyectos y Construcción" class="hero-logo">
+                <div>
+                    <span class="hero-badge">PROYECTO 25025.01 · VERSIÓN 7</span>
+                    <h1 class="hero-title">Planning, Presupuesto y Certificaciones · 3,5 Meses</h1>
+                    <div class="hero-subtitle">C/ General Tovar 2 · Promociones Mayor Rafelbuñol, SL · C/ General Tovar, 2, Valencia</div>
+                </div>
+            </div>
+            <div class="total-box">
+                <div class="total-box-label">Presupuesto Total con IVA</div>
+                <div class="total-box-amount">335.154,65 €</div>
+                <div class="total-box-sub">Base imponible: 276.987,31 €</div>
+                <div class="total-box-delivery">📅 Entrega prevista: 14 de diciembre de 2026</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <nav class="tabs-nav" id="tabsNav">
+            <button class="tab-btn active" data-tab="tab-gantt">📅 Cronograma Gantt</button>
+            <button class="tab-btn" data-tab="tab-budget">▤ Presupuesto por Capítulos</button>
+            <button class="tab-btn" data-tab="tab-certs">💶 Certificaciones Quincenales</button>
+            <button class="tab-btn" data-tab="tab-billing">🧾 Facturación Quincenal</button>
+            <button class="tab-btn" data-tab="tab-critical">⚡ Ruta Crítica & Acopios</button>
+            <button class="tab-btn" data-tab="tab-specs">📋 Ficha Técnica & Cláusulas</button>
+        </nav>
+
+        <div class="tab-content active" id="tab-gantt">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Cronograma de Ejecución y Planificación Temporal</h2>
+                    <p class="section-desc">Planificación quincenal sobre 14 semanas (3,5 meses) de obra restante, del 8 de septiembre al 14 de diciembre de 2026.</p>
+                </div>
+                <div class="filter-group">
+                    <label for="ganttPhaseFilter" style="font-size: 12.5px; font-weight:600;">Filtrar por Fase:</label>
+                    <select id="ganttPhaseFilter" class="select-filter">
+                        <option value="ALL">Todas las fases</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="gantt-wrapper">
+                <div class="gantt-main">
+                    <div class="gantt-scroll">
+                        <table class="gantt-table">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2" style="background:#E8E2D8; border-right:2px solid var(--border-line); text-align:left; padding-left:12px; width:280px; vertical-align:middle;">
+                                        Partida / Tarea de Obra
+                                    </th>
+                                    <th colspan="4" class="gantt-th-month" style="width: 28.57%;">MES 1 (8 sept - 5 oct)</th>
+                                    <th colspan="4" class="gantt-th-month" style="width: 28.57%;">MES 2 (6 oct - 2 nov)</th>
+                                    <th colspan="4" class="gantt-th-month" style="width: 28.57%;">MES 3 (3 nov - 30 nov)</th>
+                                    <th colspan="2" class="gantt-th-month" style="width: 14.28%;">MES 3,5 (1 dic - 14 dic)</th>
+                                </tr>
+                                <tr id="ganttWeeksHeaderRow"></tr>
+                            </thead>
+                            <tbody id="ganttTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <aside class="detail-aside" id="ganttDetailPanel">
+                    <div class="detail-header">
+                        <span class="badge badge-code" id="ganttDetailCap">Capítulo</span>
+                        <h3 class="detail-title" id="ganttDetailName">Seleccione una tarea</h3>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Fase de obra:</span>
+                        <span class="detail-value" id="ganttDetailPhase">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Periodo ejecución:</span>
+                        <span class="detail-value" id="ganttDetailWeeks">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Duración:</span>
+                        <span class="detail-value" id="ganttDetailDuration">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Importe s/IVA:</span>
+                        <span class="detail-value font-mono" id="ganttDetailAmount">-</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Importe c/IVA (21%):</span>
+                        <span class="detail-value font-mono" id="ganttDetailAmountVat">-</span>
+                    </div>
+                    <div class="detail-desc" id="ganttDetailDesc">
+                        Haga clic sobre cualquier barra o fila del cronograma para visualizar las especificaciones técnicas y económicas de la partida.
+                    </div>
+                </aside>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-budget">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Superficie / Obra</div>
+                    <div class="metric-value" style="font-size: 16px;">C/ General Tovar 2</div>
+                    <div class="metric-sub">Valencia · Vivienda Integral</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Total Capítulos</div>
+                    <div class="metric-value">16 capítulos</div>
+                    <div class="metric-sub">16 capítulos con importe</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Presupuesto sin IVA</div>
+                    <div class="metric-value">276.987,31 €</div>
+                    <div class="metric-sub">Base Imponible PEM V7</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Presupuesto con IVA</div>
+                    <div class="metric-value">335.154,65 €</div>
+                    <div class="metric-sub">IVA 21%: 58.167,34 €</div>
+                </div>
+            </div>
+
+            <div class="notice-box">
+                <div style="font-size: 20px;">ℹ️</div>
+                <div>
+                    <strong>Certificación acumulada a fecha (31/08/2026):</strong> Se han certificado y facturado previamente <strong>66.848,07 € sin IVA</strong> (80.886,16 € con IVA, <strong>24,13%</strong> del total). Queda pendiente de ejecutar y facturar un saldo de <strong>210.139,25 € sin IVA</strong> (254.268,49 € con IVA, <strong>75,87%</strong>) distribuido en las 7 quincenas de este planning.
+                </div>
+            </div>
+
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Desglose de Capítulos · Presupuesto PEM V7</h2>
+                </div>
+                <div class="filter-group">
+                    <input type="text" id="budgetSearchInput" class="input-search" placeholder="🔍 Buscar por código, nombre o alcance...">
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 70px;">Cód.</th>
+                                <th>Capítulo y Alcance</th>
+                                <th class="text-right">Importe s/IVA</th>
+                                <th class="text-right">Certificado a fecha</th>
+                                <th class="text-right">Pendiente</th>
+                                <th class="text-right">% Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="budgetTableBody"></tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2">TOTAL PRESUPUESTO DE EJECUCIÓN (PEM V7)</td>
+                                <td class="text-right font-mono">276.987,31 €</td>
+                                <td class="text-right font-mono">66.848,07 €</td>
+                                <td class="text-right font-mono">210.139,25 €</td>
+                                <td class="text-right font-mono">100,00%</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-certs">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Certificado Anterior</div>
+                    <div class="metric-value">66.848,07 €</div>
+                    <div class="metric-sub">24,13% acumulado a fecha</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Pendiente Planning</div>
+                    <div class="metric-value">210.139,25 €</div>
+                    <div class="metric-sub">75,87% en 7 quincenas</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Quincenas Restantes</div>
+                    <div class="metric-value">7 Quincenas</div>
+                    <div class="metric-sub">14 semanas lectivas</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Importe Medio / Q</div>
+                    <div class="metric-value">30.019,89 €</div>
+                    <div class="metric-sub">Base imponible media</div>
+                </div>
+            </div>
+
+            <div class="notice-box">
+                <div style="font-size: 20px;">💶</div>
+                <div>
+                    <strong>Regla de Certificación Quincenal ENUE:</strong> Las certificaciones se emitirán puntualmente cada 14 días naturales según la producción física ejecutada y validada por la Dirección Facultativa. No se aplican retenciones por anticipos al estar regularizadas en certificaciones previas.
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2 class="section-title">Calendario Estimado de Certificaciones Quincenales (Q01 - Q07)</h2>
+                <div style="font-size: 12.5px; color: var(--ink-muted);">Haga clic en una quincena para ver el desglose económico detallado</div>
+            </div>
+
+            <div class="card">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width:60px;">Nº</th>
+                                <th>Periodo Quincenal</th>
+                                <th>Fecha Emisión</th>
+                                <th>Hito / Avance Principal</th>
+                                <th class="text-right">% Prod.</th>
+                                <th class="text-right">Prod. Bruta</th>
+                                <th class="text-right">Amort. (0%)</th>
+                                <th class="text-right">Líquido s/IVA</th>
+                            </tr>
+                        </thead>
+                        <tbody id="certsTableBody"></tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">TOTAL CONTRATO CERTIFICADO (HISTÓRICO + PLANNING)</td>
+                                <td class="text-right font-mono">100,00%</td>
+                                <td class="text-right font-mono">276.987,31 €</td>
+                                <td class="text-right font-mono">0,00 €</td>
+                                <td class="text-right font-mono">276.987,31 €</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+
+            <div id="certDetailBox" style="display:none; background:#FFFFFF; border:1px solid var(--border-line); border-radius:var(--radius-md); padding:18px; margin-top: -10px; margin-bottom: 24px; box-shadow: var(--shadow-sm);">
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border-line); padding-bottom:10px; margin-bottom:12px;">
+                    <h3 style="font-size:15px; font-weight:700;" id="certBoxTitle">Detalle de Quincena</h3>
+                    <span class="badge badge-code" id="certBoxDate">-</span>
+                </div>
+                <div style="display:grid; grid-template-columns: repeat(4, 1fr); gap:12px; margin-bottom:12px;">
+                    <div style="background:var(--bg-card-alt); padding:10px; border-radius:6px;">
+                        <div class="tech-label">Producción Quincena</div>
+                        <div class="tech-val font-mono" id="certBoxProd">-</div>
+                    </div>
+                    <div style="background:var(--bg-card-alt); padding:10px; border-radius:6px;">
+                        <div class="tech-label">Acumulado a esta Fecha</div>
+                        <div class="tech-val font-mono" id="certBoxAcc">-</div>
+                    </div>
+                    <div style="background:var(--bg-card-alt); padding:10px; border-radius:6px;">
+                        <div class="tech-label">Base Líquida Factura</div>
+                        <div class="tech-val font-mono" id="certBoxNet">-</div>
+                    </div>
+                    <div style="background:var(--bg-card-alt); padding:10px; border-radius:6px;">
+                        <div class="tech-label">Total con IVA (21%)</div>
+                        <div class="tech-val font-mono" id="certBoxVat" style="color:var(--enue-terracotta);">-</div>
+                    </div>
+                </div>
+                <div style="font-size:13px; color:var(--ink-secondary);" id="certBoxDesc">-</div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-billing">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Ya Facturado c/IVA</div>
+                    <div class="metric-value">80.886,16 €</div>
+                    <div class="metric-sub">Certificación nº 6 (31/08)</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Pendiente Facturar c/IVA</div>
+                    <div class="metric-value">254.268,49 €</div>
+                    <div class="metric-sub">75,87% restante</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Nº Facturas Restantes</div>
+                    <div class="metric-value">7 facturas</div>
+                    <div class="metric-sub">Emisión quincenal</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Total Contrato c/IVA</div>
+                    <div class="metric-value">335.154,65 €</div>
+                    <div class="metric-sub">Base: 276.987,31 € + IVA</div>
+                </div>
+            </div>
+
+            <div class="notice-box">
+                <div style="font-size: 20px;">🧾</div>
+                <div>
+                    <strong>Plan de Tesorería y Facturación:</strong> La última factura <strong>Factura Q07 (14/12/2026)</strong> coincide con el hito de entrega de llaves y fin de obra, regularizando el saldo total exacto de <strong>27.739,24 € sin IVA</strong> (33.564,48 € con IVA) para completar el 100,00% del contrato.
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h2 class="section-title">Cuadro de Facturación Quincenal y Flujo de Cobro</h2>
+            </div>
+
+            <div class="card">
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Concepto / Factura</th>
+                                <th>Periodo Quincenal</th>
+                                <th class="text-right">Importe Quincena s/IVA</th>
+                                <th class="text-right">Importe Quincena c/IVA (21%)</th>
+                                <th class="text-right">Acumulado Facturado c/IVA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background:#FAF8F5;">
+                                <td>
+                                    <span class="badge badge-done" style="margin-right:6px;">Ya Facturada</span>
+                                    <strong>Cert. nº 6 (acumulada a fecha)</strong>
+                                </td>
+                                <td>Hasta 31/08/2026</td>
+                                <td class="text-right font-mono">66.848,07 €</td>
+                                <td class="text-right font-mono">80.886,16 €</td>
+                                <td class="text-right font-mono fw-bold">80.886,16 €</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Factura Q01</strong> · Trabajos previos, albañilería y fontanería</td>
+                                <td>8-21 sept. 2026</td>
+                                <td class="text-right font-mono">23.500,00 €</td>
+                                <td class="text-right font-mono">28.435,00 €</td>
+                                <td class="text-right font-mono">109.321,16 €</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Factura Q02</strong> · Tabiquería/techos y arranque ventanas</td>
+                                <td>22 sept.-5 oct. 2026</td>
+                                <td class="text-right font-mono">29.000,00 €</td>
+                                <td class="text-right font-mono">35.090,00 €</td>
+                                <td class="text-right font-mono">144.411,16 €</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Factura Q03</strong> · Ventanas, clima y distribución eléctrica</td>
+                                <td>6-19 oct. 2026</td>
+                                <td class="text-right font-mono">33.200,00 €</td>
+                                <td class="text-right font-mono">40.172,00 €</td>
+                                <td class="text-right font-mono">184.583,16 €</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Factura Q04</strong> · Ventilación, modificados e inicio revestimientos</td>
+                                <td>20 oct.-2 nov. 2026</td>
+                                <td class="text-right font-mono">33.200,00 €</td>
+                                <td class="text-right font-mono">40.172,00 €</td>
+                                <td class="text-right font-mono">224.755,16 €</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Factura Q05</strong> · Revestimientos y carpintería interior</td>
+                                <td>3-16 nov. 2026</td>
+                                <td class="text-right font-mono">31.800,00 €</td>
+                                <td class="text-right font-mono">38.478,00 €</td>
+                                <td class="text-right font-mono">263.213,16 €</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Factura Q06</strong> · Carpintería interior y equipamiento baños/cocina</td>
+                                <td>17-30 nov. 2026</td>
+                                <td class="text-right font-mono">31.700,00 €</td>
+                                <td class="text-right font-mono">38.357,00 €</td>
+                                <td class="text-right font-mono">301.590,16 €</td>
+                            </tr>
+                            <tr style="background:#FFF9F5;">
+                                <td>
+                                    <span class="badge badge-final" style="margin-right:6px;">Última Factura</span>
+                                    <strong>Factura Q07</strong> · Remates finales y entrega de obra
+                                    <div class="desc-sub">🏠 14/12/2026 Entrega de vivienda y recepción de llaves</div>
+                                </td>
+                                <td>1-14 dic. 2026</td>
+                                <td class="text-right font-mono fw-bold" style="color:var(--enue-terracotta);">27.739,24 €</td>
+                                <td class="text-right font-mono fw-bold" style="color:var(--enue-terracotta);">33.564,48 €</td>
+                                <td class="text-right font-mono fw-bold" style="color:var(--enue-terracotta);">335.154,65 €</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="2">TOTAL PENDIENTE DE FACTURAR (Q01 a Q07)</td>
+                                <td class="text-right font-mono">210.139,25 €</td>
+                                <td class="text-right font-mono">254.268,49 €</td>
+                                <td class="text-right font-mono">335.154,65 € (100%)</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-critical">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Análisis de Ruta Crítica y Gestión de Suministros</h2>
+                    <p class="section-desc">Identificación de cuellos de botella temporales, dependencias constructivas y plazos de acopio clave para garantizar la entrega el 14 de diciembre de 2026.</p>
+                </div>
+            </div>
+
+            <div class="two-cols">
+                <div>
+                    <h3 style="font-size:16px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:6px;">
+                        ⚠️ Partidas en Ruta Crítica
+                    </h3>
+                    
+                    <div class="risk-card">
+                        <div class="risk-title">
+                            <span>🪟 Ventanas de madera y aluminio (Cap. 09)</span>
+                            <span class="badge badge-code">Semanas 3-8</span>
+                        </div>
+                        <div class="risk-desc">
+                            Con <strong>38.634,24 € pendientes</strong>, es la partida individual más voluminosa del contrato. El cerramiento exterior condiciona la hermeticidad del edificio y el inicio de los revestimientos delicados y la carpintería interior.
+                        </div>
+                    </div>
+
+                    <div class="risk-card">
+                        <div class="risk-title">
+                            <span>🚪 Carpintería interior y armarios (Cap. 11)</span>
+                            <span class="badge badge-code">Semanas 7-11</span>
+                        </div>
+                        <div class="risk-desc">
+                            Cuenta con <strong>36.815,12 € pendientes</strong>. La fabricación a medida de puertas y frentes de armario lacados requiere mediciones definitivas tempranas tras el cierre de trasdosados de albañilería.
+                        </div>
+                    </div>
+
+                    <div class="risk-card">
+                        <div class="risk-title">
+                            <span>⚡ Electricidad y mecanismos (Cap. 06)</span>
+                            <span class="badge badge-code">Semanas 3-6</span>
+                        </div>
+                        <div class="risk-desc">
+                            <strong>15.341,59 € pendientes</strong>. El cableado estructurado y las cajas de mecanismos Jung deben quedar totalmente posicionados antes del emplastecido y pintura para evitar rozas posteriores.
+                        </div>
+                    </div>
+
+                    <div class="risk-card">
+                        <div class="risk-title">
+                            <span>🍳 Equipamiento de cocina y baños (Cap. 12 y 13)</span>
+                            <span class="badge badge-code">Semanas 9-11</span>
+                        </div>
+                        <div class="risk-desc">
+                            Suma conjunta de <strong>39.983,71 € pendientes</strong>. Requiere coordinación simultánea de suministros Teka y Geberit con bancadas y fontanería para pruebas hidráulicas previas a la entrega.
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 style="font-size:16px; font-weight:700; margin-bottom:14px; display:flex; align-items:center; gap:6px;">
+                        📦 Plan de Acopios y Pedidos Clave
+                    </h3>
+
+                    <div class="supply-card">
+                        <div class="supply-header">
+                            <span class="supply-item">Ventanas de madera y aluminio a medida</span>
+                            <span class="supply-lead">Plazo: 8 semanas</span>
+                        </div>
+                        <div class="supply-note">
+                            Encargar en <strong>Semana 1</strong> tras ratificación de replanteo en huecos de fachada, para asegurar la recepción en taller/obra en la <strong>Semana 8-9</strong> sin desfases.
+                        </div>
+                    </div>
+
+                    <div class="supply-card">
+                        <div class="supply-header">
+                            <span class="supply-item">Cocina, isla y equipamiento Teka</span>
+                            <span class="supply-lead">Plazo: 6 semanas</span>
+                        </div>
+                        <div class="supply-note">
+                            Medición definitiva en obra durante la <strong>Semana 6</strong> tras alicatados. Inicio de montaje en <strong>Semanas 9-11</strong> para su perfecta integración con bancadas.
+                        </div>
+                    </div>
+
+                    <div class="supply-card">
+                        <div class="supply-header">
+                            <span class="supply-item">Equipamiento de baños Geberit</span>
+                            <span class="supply-lead">Plazo: 5 semanas</span>
+                        </div>
+                        <div class="supply-note">
+                            Lanzamiento de pedido de sanitarios suspendidos, bastidores y griferías en la <strong>Semana 5</strong> para su instalación en <strong>Semanas 9-10</strong>.
+                        </div>
+                    </div>
+
+                    <div class="supply-card">
+                        <div class="supply-header">
+                            <span class="supply-item">Puertas y armarios de carpintería interior</span>
+                            <span class="supply-lead">Plazo: 5 semanas</span>
+                        </div>
+                        <div class="supply-note">
+                            Paso a fabricación en taller tras replanteo de premarcos. Montaje secuencial en <strong>Semanas 7-11</strong>, protegiendo pavimentos ya terminados.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="tab-specs">
+            <div class="section-header">
+                <div>
+                    <h2 class="section-title">Ficha Técnica Contractual del Proyecto</h2>
+                    <p class="section-desc">Condiciones contractuales, garantías y especificaciones del expediente V7.</p>
+                </div>
+            </div>
+
+            <div class="card" style="padding: 24px; margin-bottom: 24px;">
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <div class="tech-label">Empresa Constructora</div>
+                        <div class="tech-val">ENUE PROYECTOS Y CONSTRUCCIÓN S.L.</div>
+                        <div class="desc-sub">B98930688 · Calle Conde de Altea 57, Bajo · 46005 Valencia</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-label">Expediente y Versión</div>
+                        <div class="tech-val">25025.01 - C/ General Tovar 2 (Versión 7)</div>
+                        <div class="desc-sub">Presupuesto V7 de fecha 30 de agosto de 2026</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-label">Emplazamiento de la Obra</div>
+                        <div class="tech-val">C/ General Tovar, 2, Valencia</div>
+                        <div class="desc-sub">Reforma integral de vivienda</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-label">Cliente / Promotor</div>
+                        <div class="tech-val">Promociones Mayor Rafelbuñol, SL</div>
+                        <div class="desc-sub">Calle La Pau, nº 12 bajo, 46138 Rafelbunyol</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-label">Plazo de Ejecución Restante</div>
+                        <div class="tech-val">3,5 meses · 14 semanas · 7 certificaciones quincenales</div>
+                        <div class="desc-sub">Del 8 de septiembre de 2026 al 14 de diciembre de 2026</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-label">Fecha Límite de Entrega</div>
+                        <div class="tech-val" style="color:var(--enue-terracotta);">14 de diciembre de 2026</div>
+                        <div class="desc-sub">Fin de la Certificación / Factura Q07</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-label">Presupuesto sin IVA (PEM V7)</div>
+                        <div class="tech-val font-mono">276.987,31 €</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-label">IVA Aplicable</div>
+                        <div class="tech-val font-mono">21% · 58.167,34 €</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-label">Presupuesto Total con IVA</div>
+                        <div class="tech-val font-mono fw-bold" style="font-size:16px;">335.154,65 €</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-label">Certificado Hasta la Fecha</div>
+                        <div class="tech-val font-mono">66.848,07 € sin IVA (24,13%)</div>
+                        <div class="desc-sub">Certificación nº 6, 31/08/2026 (80.886,16 € con IVA)</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-label">Pendiente de Certificar</div>
+                        <div class="tech-val font-mono">210.139,25 € sin IVA (75,87%)</div>
+                        <div class="desc-sub">254.268,49 € con IVA distribuido en Q01-Q07</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-label">Forma de Pago y Garantía</div>
+                        <div class="tech-val">Certificaciones quincenales s/ medición ejecutada</div>
+                        <div class="desc-sub">Garantía ENUE: 1 año sobre correcta ejecución y materiales</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-header">
+                <h3 class="section-title">Notas y Cláusulas Contractuales</h3>
+            </div>
+
+            <div class="card" style="padding: 22px;">
+                <div class="clause-item">
+                    • <strong>Seguridad y salud laboral:</strong> Todo el personal de ENUE PROYECTOS Y CONSTRUCCIÓN S.L. y de sus empresas subcontratadas cuenta con la debida acreditación, formación en prevención de riesgos laborales (PRL) y cobertura de seguros de responsabilidad civil en vigor.
+                </div>
+                <div class="clause-item">
+                    • <strong>Medición y liquidación:</strong> Los importes reflejados corresponden a mediciones presupuestadas. La facturación quincenal se ajustará estrictamente a las mediciones de obra realmente ejecutadas y aprobadas por la Dirección Facultativa.
+                </div>
+                <div class="clause-item">
+                    • <strong>Tasas y acometidas:</strong> No se incluyen tasas municipales, licencias urbanísticas, acometidas definitivas de compañías suministradoras ni costes notariales o registrales, salvo mención expresa en partidas específicas.
+                </div>
+                <div class="clause-item">
+                    • <strong>Revisión y variaciones:</strong> El importe puede variar al alza o a la baja en función de las mediciones realmente ejecutadas y aprobadas, según el presupuesto V7 de 30 de agosto de 2026.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const WEEKS_LABELS = [
+            '8-14 sept','15-21 sept','22-28 sept','29 sept-5 oct',
+            '6-12 oct','13-19 oct','20-26 oct','27 oct-2 nov',
+            '3-9 nov','10-16 nov','17-23 nov','24-30 nov',
+            '1-7 dic','8-14 dic'
+        ];
+
+        const PHASE_COLORS = {
+            'Previa': '#8c5e58',
+            'Albañilería': '#c07d53',
+            'Instalaciones': '#4a6fa5',
+            'Fachada': '#5c8065',
+            'Revestimientos': '#9c6644',
+            'Acabados': '#b07d62',
+            'Equipamiento': '#4682b4',
+            'Modificados': '#6c757d',
+            'Remates': '#6c757d'
+        };
+
+        const GANTT_TASKS = [
+            ["Remates de trabajos previos y demoliciones","Previa",0,1,"Cap. 01",568.00,"Pequeños levantados y remates pendientes de demolición."],
+            ["Finalización de tabiquería y techos en albañilería","Albañilería",0,3,"Cap. 03",19316.46,"Trabajos de tabiquería PYL, techos continuos y repicados/enfoscados de fachada pendientes."],
+            ["Fontanería y saneamiento restante","Instalaciones",1,2,"Cap. 05",2430.15,"Ayudas y remates finales de fontanería y saneamiento."],
+            ["Carpintería exterior: fabricación y colocación de ventanas","Fachada",2,6,"Cap. 09",38634.24,"Fabricación e instalación de las ventanas de madera y aluminio pendientes en fachada."],
+            ["Climatización y ACS","Instalaciones",2,3,"Cap. 07",8960.04,"Finalización de unidades de climatización, conductos y aerotermo."],
+            ["Electricidad, mecanismos e iluminación","Instalaciones",2,4,"Cap. 06",15341.59,"Mecanismos Jung, iluminación y ayudas de electricidad pendientes."],
+            ["Instalación de ventilación","Instalaciones",3,1,"Cap. 08",777.48,"Conductos de extracción de cocina y baños."],
+            ["Modificados: pavimento hidráulico y tratamientos especiales","Modificados",4,4,"Cap. 19",4522.99,"Ajustes, relleno y tratamientos especiales de pavimento hidráulico."],
+            ["Revestimientos: alicatados, pavimentos y pintura","Revestimientos",5,5,"Cap. 10",29588.52,"Alicatado de baños, pavimento vinílico, rodapiés, pintura y molduras."],
+            ["Carpintería interior: puertas y armarios","Acabados",6,4,"Cap. 11",36815.12,"Puertas abatibles/correderas y armarios lacados/laminados."],
+            ["Equipamiento de baños","Equipamiento",8,3,"Cap. 12",16707.88,"Sanitarios Geberit, muebles, griferías, mamparas y espejos."],
+            ["Equipamiento de cocina y lavadero","Equipamiento",8,3,"Cap. 13",23275.83,"Cocina, isla, bancadas y electrodomésticos Teka."],
+            ["Seguridad y salud (resto de obra)","Remates",0,14,"Cap. 14",2075.95,"Medidas de seguridad y salud durante toda la ejecución restante."],
+            ["Gestión de residuos (resto de obra)","Remates",0,14,"Cap. 15",690.48,"Alquiler y gestión de contenedores durante la obra restante."],
+            ["Medios auxiliares (resto de obra)","Remates",0,12,"Cap. 16",4122.58,"Plataformas de elevación y subidas de material."],
+            ["Varios (limpiezas y portes, resto de obra)","Remates",0,14,"Cap. 17",6311.94,"Limpiezas periódicas, protecciones y portes durante toda la obra restante."],
+            ["Limpieza final, pruebas y entrega","Remates",12,2,"Cap. 17",0.00,"Limpieza final de obra, pruebas, boletines y entrega de llaves, incluida en el capítulo 17."]
+        ];
+
+        const CHAPTERS_DATA = [
+            { code: "01", name: "Trabajos Previos y Demoliciones", total: 14065.74, pct: 5.08, cert: 13497.74, pend: 568.00, desc: "Derribos, picados y remates de la fase de demolición ya casi finalizada." },
+            { code: "03", name: "Albañilería", total: 39382.24, pct: 14.22, cert: 20065.78, pend: 19316.46, desc: "Tabiquería PYL, techos continuos y trabajos de albañilería en fachada y paramentos." },
+            { code: "05", name: "Instalación de Fontanería y Saneamiento", total: 9950.66, pct: 3.59, cert: 7520.51, pend: 2430.15, desc: "Red ACS/AF multicapa, saneamiento y ayudas de fontanería." },
+            { code: "06", name: "Instalación Eléctrica e Iluminación", total: 17777.31, pct: 6.42, cert: 2435.73, pend: 15341.59, desc: "Distribución eléctrica, mecanismos Jung e iluminación pendientes de gran parte de la instalación." },
+            { code: "07", name: "Instalación Climatización y ACS", total: 14541.09, pct: 5.25, cert: 5581.05, pend: 8960.04, desc: "Aire acondicionado, ACS y remates de climatización." },
+            { code: "08", name: "Instalación Ventilación", total: 777.48, pct: 0.28, cert: 0.00, pend: 777.48, desc: "Conductos de extracción de cocina y baños, pendiente de iniciar." },
+            { code: "09", name: "Carpintería Exterior/Cerrajería", total: 44542.16, pct: 16.08, cert: 5907.91, pend: 38634.24, desc: "Fabricación y colocación de ventanas de madera y aluminio, mayor partida pendiente." },
+            { code: "10", name: "Revestimientos", total: 29588.52, pct: 10.68, cert: 0.00, pend: 29588.52, desc: "Alicatados, pavimentos, rodapiés, pintura y molduras, íntegramente pendientes." },
+            { code: "11", name: "Carpintería Interior", total: 36815.12, pct: 13.29, cert: 0.00, pend: 36815.12, desc: "Puertas abatibles/correderas y armarios lacados/laminados, íntegramente pendientes." },
+            { code: "12", name: "Equipamiento de Baños", total: 16707.88, pct: 6.03, cert: 0.00, pend: 16707.88, desc: "Sanitarios Geberit, muebles, griferías, mamparas y espejos, íntegramente pendiente." },
+            { code: "13", name: "Equipamiento de Cocina y Lavadero", total: 23275.83, pct: 8.40, cert: 0.00, pend: 23275.83, desc: "Cocina, isla, bancadas y electrodomésticos Teka, íntegramente pendiente." },
+            { code: "14", name: "Seguridad y Salud", total: 3459.91, pct: 1.25, cert: 1383.96, pend: 2075.95, desc: "EPIs, señalización y protecciones durante toda la ejecución restante." },
+            { code: "15", name: "Gestión de Residuos", total: 4398.48, pct: 1.59, cert: 3708.00, pend: 690.48, desc: "Alquiler y gestión de contenedores durante lo que queda de obra." },
+            { code: "16", name: "Medios Auxiliares", total: 6733.70, pct: 2.43, cert: 2611.12, pend: 4122.58, desc: "Plataformas de elevación y subidas de material restantes." },
+            { code: "17", name: "Varios", total: 6985.04, pct: 2.52, cert: 673.10, pend: 6311.94, desc: "Limpiezas de obra, protecciones y portes pendientes, incluye limpieza y entrega final." },
+            { code: "19", name: "Modificados", total: 7986.16, pct: 2.88, cert: 3463.17, pend: 4522.99, desc: "Ajustes de pavimento hidráulico y tratamientos especiales pendientes." }
+        ];
+
+        const CERTS_DATA = [
+            { id: "Q01", period: "8-21 sept. 2026 · Semanas 1-2", date: "21/09/2026", milestone: "Remates previos, inicio de albañilería y fontanería", pct: 8.484, caps: "Cap. 01, 03 y 05", desc: "Importe de la quincena: 23.500,00 € sin IVA." },
+            { id: "Q02", period: "22 sept.-5 oct. 2026 · Semanas 3-4", date: "05/10/2026", milestone: "Finalización de tabiquería/techos y arranque de ventanas", pct: 10.470, caps: "Cap. 03 y 09", desc: "Importe de la quincena: 29.000,00 € sin IVA." },
+            { id: "Q03", period: "6-19 oct. 2026 · Semanas 5-6", date: "19/10/2026", milestone: "Ventanas, climatización y electricidad", pct: 11.986, caps: "Cap. 06, 07 y 09", desc: "Importe de la quincena: 33.200,00 € sin IVA." },
+            { id: "Q04", period: "20 oct.-2 nov. 2026 · Semanas 7-8", date: "02/11/2026", milestone: "Ventilación, modificados e inicio de revestimientos", pct: 11.986, caps: "Cap. 08, 10 y 19", desc: "Importe de la quincena: 33.200,00 € sin IVA." },
+            { id: "Q05", period: "3-16 nov. 2026 · Semanas 9-10", date: "16/11/2026", milestone: "Revestimientos y arranque de carpintería interior", pct: 11.481, caps: "Cap. 10 y 11", desc: "Importe de la quincena: 31.800,00 € sin IVA." },
+            { id: "Q06", period: "17-30 nov. 2026 · Semanas 11-12", date: "30/11/2026", milestone: "Carpintería interior y equipamiento de baños/cocina", pct: 11.445, caps: "Cap. 11, 12 y 13", desc: "Importe de la quincena: 31.700,00 € sin IVA." },
+            { id: "Q07", period: "1-14 dic. 2026 · Semanas 13-14", date: "14/12/2026", milestone: "Remates finales, limpieza y entrega de obra", pct: 10.015, caps: "Cap. 12, 13 y 17", desc: "Importe de la quincena: 27.739,24 € sin IVA.", isFinal: true }
+        ];
+
+        const TOTAL_PEM = 276987.31;
+        const PREV_CERT_VAL = 66848.07;
+
+        const currencyFmt = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' });
+        const pctFmt = (val, decimals = 2) => val.toLocaleString('es-ES', { minimumFractionDigits: decimals, maximumFractionDigits: decimals }) + ' %';
+
+        function initTabs() {
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            tabButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabButtons.forEach(b => b.classList.remove('active'));
+                    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    
+                    btn.classList.add('active');
+                    const target = document.getElementById(btn.getAttribute('data-tab'));
+                    if (target) target.classList.add('active');
+                });
+            });
+        }
+
+        function renderGantt() {
+            const weeksRow = document.getElementById('ganttWeeksHeaderRow');
+            weeksRow.innerHTML = '';
+            WEEKS_LABELS.forEach((label, idx) => {
+                const th = document.createElement('th');
+                th.className = 'gantt-th-week';
+                th.innerHTML = `<span style="font-size:9px; color:var(--ink-muted);">S${idx+1}</span><br>${label}`;
+                weeksRow.appendChild(th);
+            });
+
+            const phaseSelect = document.getElementById('ganttPhaseFilter');
+            const phases = [...new Set(GANTT_TASKS.map(t => t[1]))];
+            phases.forEach(phase => {
+                const opt = document.createElement('option');
+                opt.value = phase;
+                opt.textContent = phase;
+                phaseSelect.appendChild(opt);
+            });
+
+            phaseSelect.addEventListener('change', (e) => {
+                renderGanttRows(e.target.value);
+            });
+
+            renderGanttRows('ALL');
+        }
+
+        function renderGanttRows(filterPhase) {
+            const tbody = document.getElementById('ganttTableBody');
+            tbody.innerHTML = '';
+
+            GANTT_TASKS.forEach((task, index) => {
+                const [name, phase, startW, durW, cap, amount, desc] = task;
+
+                if (filterPhase !== 'ALL' && phase !== filterPhase) return;
+
+                const tr = document.createElement('tr');
+                tr.className = 'gantt-row';
+
+                const tdName = document.createElement('td');
+                tdName.className = 'gantt-task-name';
+                tdName.title = `${cap} · ${name}`;
+                tdName.innerHTML = `<span class="badge badge-code" style="margin-right:6px; font-size:10px;">${cap}</span>${name}`;
+                tr.appendChild(tdName);
+
+                for (let w = 0; w < 14; w++) {
+                    const td = document.createElement('td');
+                    td.className = 'gantt-grid-cell';
+
+                    if (w === startW) {
+                        const barColor = PHASE_COLORS[phase] || '#6c757d';
+                        const barWidthPercent = (durW * 100);
+                        const bar = document.createElement('div');
+                        bar.className = 'gantt-bar';
+                        bar.style.backgroundColor = barColor;
+                        bar.style.width = `calc(${barWidthPercent}% + ${(durW - 1) * 1}px)`;
+                        bar.textContent = durW > 1 ? `${name} (${durW} sem)` : `${durW}s`;
+                        td.appendChild(bar);
+                    }
+                    tr.appendChild(td);
+                }
+
+                tr.addEventListener('click', () => {
+                    document.querySelectorAll('.gantt-row').forEach(r => r.classList.remove('selected-row'));
+                    tr.classList.add('selected-row');
+
+                    document.getElementById('ganttDetailCap').textContent = cap;
+                    document.getElementById('ganttDetailName').textContent = name;
+                    document.getElementById('ganttDetailPhase').textContent = phase;
+                    document.getElementById('ganttDetailWeeks').textContent = `Semanas ${startW + 1} a ${startW + durW} (${WEEKS_LABELS[startW]} - ${WEEKS_LABELS[startW + durW - 1]})`;
+                    document.getElementById('ganttDetailDuration').textContent = `${durW} semana${durW > 1 ? 's' : ''}`;
+                    document.getElementById('ganttDetailAmount').textContent = amount > 0 ? currencyFmt.format(amount) : 'Incluido en Cap. 17';
+                    document.getElementById('ganttDetailAmountVat').textContent = amount > 0 ? currencyFmt.format(amount * 1.21) : 'Incluido en Cap. 17';
+                    document.getElementById('ganttDetailDesc').textContent = desc;
+                });
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        function renderBudget() {
+            const tbody = document.getElementById('budgetTableBody');
+            const searchInput = document.getElementById('budgetSearchInput');
+
+            function populate(query = '') {
+                tbody.innerHTML = '';
+                const q = query.toLowerCase().trim();
+
+                const filtered = CHAPTERS_DATA.filter(ch => 
+                    ch.code.toLowerCase().includes(q) || 
+                    ch.name.toLowerCase().includes(q) || 
+                    ch.desc.toLowerCase().includes(q)
+                );
+
+                if (filtered.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" class="text-center" style="padding:24px; color:var(--ink-muted);">No se encontraron capítulos que coincidan con la búsqueda.</td></tr>`;
+                    return;
+                }
+
+                filtered.forEach(ch => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><span class="badge badge-code">Cap. ${ch.code}</span></td>
+                        <td>
+                            <strong style="color:var(--ink-primary);">${ch.name}</strong>
+                            <div class="desc-sub">${ch.desc}</div>
+                        </td>
+                        <td class="text-right font-mono">${currencyFmt.format(ch.total)}</td>
+                        <td class="text-right font-mono" style="color:#2D6A4F;">${currencyFmt.format(ch.cert)}</td>
+                        <td class="text-right font-mono" style="color:#9B6A54; font-weight:600;">${currencyFmt.format(ch.pend)}</td>
+                        <td class="text-right font-mono">${pctFmt(ch.pct, 2)}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            searchInput.addEventListener('input', (e) => populate(e.target.value));
+            populate();
+        }
+
+        function renderCerts() {
+            const tbody = document.getElementById('certsTableBody');
+            tbody.innerHTML = '';
+
+            const tr0 = document.createElement('tr');
+            tr0.className = 'interactive-row';
+            tr0.style.backgroundColor = '#FAF8F5';
+            tr0.innerHTML = `
+                <td><span class="badge badge-done">00</span></td>
+                <td>
+                    <strong>Certificación acumulada a la fecha</strong>
+                    <div class="desc-sub">Hasta 31/08/2026 · Certificación nº 6 emitida</div>
+                </td>
+                <td>31/08/2026</td>
+                <td>Demolición, parte de albañilería, fontanería e instalaciones previas</td>
+                <td class="text-right font-mono">24,13%</td>
+                <td class="text-right font-mono">66.848,07 €</td>
+                <td class="text-right font-mono">0,00 €</td>
+                <td class="text-right font-mono fw-bold">66.848,07 €</td>
+            `;
+            tr0.addEventListener('click', () => {
+                selectCertRow(tr0, {
+                    id: "Certificación Acumulada nº 6",
+                    date: "31/08/2026",
+                    prod: 66848.07,
+                    acc: 66848.07,
+                    net: 66848.07,
+                    vat: 80886.16,
+                    desc: "Producción ejecutada con anterioridad al nuevo planning. Total acumulado del 24,13% del presupuesto de ejecución."
+                });
+            });
+            tbody.appendChild(tr0);
+
+            let runningAcc = PREV_CERT_VAL;
+
+            CERTS_DATA.forEach(c => {
+                const bruto = TOTAL_PEM * (c.pct / 100);
+                runningAcc += bruto;
+                const net = bruto;
+                const vatTotal = net * 1.21;
+                const currentAcc = runningAcc;
+
+                const tr = document.createElement('tr');
+                tr.className = 'interactive-row';
+                if (c.isFinal) tr.style.backgroundColor = '#FFFBF5';
+
+                tr.innerHTML = `
+                    <td><span class="badge ${c.isFinal ? 'badge-final' : 'badge-code'}">${c.id}</span></td>
+                    <td>
+                        <strong>${c.period}</strong>
+                        <div class="desc-sub">${c.caps}</div>
+                    </td>
+                    <td>${c.date} ${c.isFinal ? '🏠' : ''}</td>
+                    <td>${c.milestone}</td>
+                    <td class="text-right font-mono">${pctFmt(c.pct, 3)}</td>
+                    <td class="text-right font-mono">${currencyFmt.format(bruto)}</td>
+                    <td class="text-right font-mono">0,00 €</td>
+                    <td class="text-right font-mono fw-bold">${currencyFmt.format(net)}</td>
+                `;
+
+                tr.addEventListener('click', () => {
+                    selectCertRow(tr, {
+                        id: `Certificación ${c.id}`,
+                        date: c.date,
+                        prod: bruto,
+                        acc: currentAcc,
+                        net: net,
+                        vat: vatTotal,
+                        desc: `${c.desc} Afecta principalmente a: ${c.caps}. Hito: ${c.milestone}.`
+                    });
+                });
+
+                tbody.appendChild(tr);
+            });
+        }
+
+        function selectCertRow(rowElem, data) {
+            document.querySelectorAll('#certsTableBody tr').forEach(r => r.classList.remove('selected-row'));
+            rowElem.classList.add('selected-row');
+
+            const box = document.getElementById('certDetailBox');
+            box.style.display = 'block';
+
+            document.getElementById('certBoxTitle').textContent = data.id;
+            document.getElementById('certBoxDate').textContent = data.date;
+            document.getElementById('certBoxProd').textContent = currencyFmt.format(data.prod);
+            document.getElementById('certBoxAcc').textContent = currencyFmt.format(data.acc);
+            document.getElementById('certBoxNet').textContent = currencyFmt.format(data.net);
+            document.getElementById('certBoxVat').textContent = currencyFmt.format(data.vat);
+            document.getElementById('certBoxDesc').innerHTML = `<strong>Observaciones técnicas:</strong> ${data.desc}`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTabs();
+            renderGantt();
+            renderBudget();
+            renderCerts();
+        });
+    </script>
+</body>
+</html>
